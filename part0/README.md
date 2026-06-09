@@ -68,7 +68,7 @@ sequenceDiagram
     Note right of browser: The browser executes the callback function that renders the notes received from the server
 ```
 
-0.6: Uusi muistiinpano
+# 0.6: Uusi muistiinpano
 
 ```mermaid
 sequenceDiagram
