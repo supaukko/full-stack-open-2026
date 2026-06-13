@@ -12,9 +12,10 @@ const Feedback = ({ handleGood, handleNeutral, handleBad }) => (
 );
 
 const StatisticLine = ({ name, value }) => (
-  <div>
-    {name} {value}
-  </div>
+  <tr>
+    <td>{name}</td>
+    <td>{value}</td>
+  </tr>
 );
 
 const Statistics = ({ good, neutral, bad }) => {
@@ -22,17 +23,24 @@ const Statistics = ({ good, neutral, bad }) => {
   const avg = all > 0 ? (good - bad) / all : 0;
   const positive = all > 0 ? (good / all) * 100 : 0;
 
-  return all === 0 ? (
-    <p>No feedback given</p>
-  ) : (
+  return (
     <>
-      <StatisticLine name="good" value={good} />
-      <StatisticLine name="neutral" value={neutral} />
-      <StatisticLine name="bad" value={bad} />
+      <h1>Statistics</h1>
+      {all === 0 ? (
+        <p>No feedback given</p>
+      ) : (
+        <table>
+          <tbody>
+            <StatisticLine name="good" value={good} />
+            <StatisticLine name="neutral" value={neutral} />
+            <StatisticLine name="bad" value={bad} />
 
-      <StatisticLine name="all" value={all} />
-      <StatisticLine name="average" value={avg} />
-      <StatisticLine name="positive" value={positive} />
+            <StatisticLine name="all" value={all} />
+            <StatisticLine name="average" value={avg} />
+            <StatisticLine name="positive" value={positive} />
+          </tbody>
+        </table>
+      )}
     </>
   );
 };
