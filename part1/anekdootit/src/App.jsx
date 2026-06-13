@@ -4,6 +4,18 @@ const Button = ({ name, onClick }) => <button onClick={onClick}>{name}</button>;
 
 const Vote = ({ value }) => <p>Has {value} votes</p>;
 
+const MostVoted = ({ value }) => {
+  return value.anecdote === null ? (
+    <p></p>
+  ) : (
+    <div>
+      <h1>Anecdote with most votes</h1>
+      <p>{value.anecdote}</p>
+      Has {value.votes} votes
+    </div>
+  );
+};
+
 const Anecdote = ({ anecdote, handleAnecdote, votes, handleVote }) => {
   return (
     <div>
@@ -43,6 +55,22 @@ const App = () => {
     setVotes({ ...votes, [selected]: (votes[selected] || 0) + 1 });
   };
 
+  const mostVoted = () => {
+    let result = {
+      anecdote: null,
+      votes: 0,
+    };
+
+    for (const idx in votes) {
+      if (votes[idx] > result.votes) {
+        result.votes = votes[idx];
+        result.anecdote = anecdotes[idx];
+      }
+    }
+
+    return result;
+  };
+
   return (
     <div>
       <Anecdote
@@ -51,6 +79,8 @@ const App = () => {
         votes={votes[selected] || 0}
         handleVote={handleVote}
       />
+
+      <MostVoted value={mostVoted()} />
     </div>
   );
 };
