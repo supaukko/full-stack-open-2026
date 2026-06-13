@@ -2,11 +2,15 @@ import { useState } from 'react';
 
 const Button = ({ name, onClick }) => <button onClick={onClick}>{name}</button>;
 
-const Anecdote = ({ anecdote, onClick }) => {
+const Vote = ({ value }) => <p>Has {value} votes</p>;
+
+const Anecdote = ({ anecdote, handleAnecdote, votes, handleVote }) => {
   return (
     <div>
       <p>{anecdote}</p>
-      <Button name="next anecdote" onClick={onClick} />
+      <Vote value={votes} />
+      <Button name="vote" onClick={handleVote} />
+      <Button name="next anecdote" onClick={handleAnecdote} />
     </div>
   );
 };
@@ -24,6 +28,7 @@ const App = () => {
   ];
 
   const [selected, setSelected] = useState(0);
+  const [votes, setVotes] = useState({});
 
   const randomIndex = (min, max) => {
     // min and max included
@@ -31,12 +36,21 @@ const App = () => {
   };
 
   const handleNextAnecdote = () => {
-    setSelected(randomIndex(0, anecdotes.length));
+    setSelected(randomIndex(0, anecdotes.length - 1));
+  };
+
+  const handleVote = () => {
+    setVotes({ ...votes, [selected]: (votes[selected] || 0) + 1 });
   };
 
   return (
     <div>
-      <Anecdote anecdote={anecdotes[selected]} onClick={handleNextAnecdote} />
+      <Anecdote
+        anecdote={anecdotes[selected]}
+        handleAnecdote={handleNextAnecdote}
+        votes={votes[selected] || 0}
+        handleVote={handleVote}
+      />
     </div>
   );
 };
